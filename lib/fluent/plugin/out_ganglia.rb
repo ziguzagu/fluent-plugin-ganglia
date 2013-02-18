@@ -12,13 +12,13 @@ class Fluent::GangliaOutput < Fluent::Output
   config_param :name_keys, :string, :default => nil
   config_param :name_key_pattern, :string, :default => nil
   config_param :add_key_prefix, :string, :default => nil
-  config_param :value_type, :string,  :default => "uint32"
-  config_param :units, :string, :default => nil
-  config_param :group, :string, :default => nil
-  config_param :title, :string, :default => nil
+  config_param :value_type, :string,  :default => 'uint32'
+  config_param :units, :string, :default => ''
+  config_param :group, :string, :default => ''
+  config_param :title, :string, :default => ''
   config_param :tmax, :integer, :default => 60
   config_param :dmax, :integer, :default => 0
-  config_param :spoof, :string, :default => nil
+  config_param :spoof, :string, :default => ''
 
   def configure(conf)
     super
