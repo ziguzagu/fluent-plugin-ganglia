@@ -7,18 +7,18 @@ class Fluent::GangliaOutput < Fluent::Output
     require "gmetric"
   end
 
-  config_param :host, :string, :default => '127.0.0.1'
-  config_param :port, :integer
-  config_param :name_keys, :string, :default => nil
-  config_param :name_key_pattern, :string, :default => nil
-  config_param :add_key_prefix, :string, :default => nil
-  config_param :value_type, :string,  :default => 'uint32'
-  config_param :units, :string, :default => ''
-  config_param :group, :string, :default => ''
-  config_param :title, :string, :default => ''
-  config_param :tmax, :integer, :default => 60
-  config_param :dmax, :integer, :default => 0
-  config_param :spoof, :string, :default => ''
+  config_param :port,             :integer
+  config_param :host,             :string,  :default => '127.0.0.1'
+  config_param :name_keys,        :string,  :default => nil
+  config_param :name_key_pattern, :string,  :default => nil
+  config_param :add_key_prefix,   :string,  :default => nil
+  config_param :value_type,       :string,  :default => 'uint32'
+  config_param :units,            :string,  :default => ''
+  config_param :group,            :string,  :default => ''
+  config_param :title,            :string,  :default => ''
+  config_param :tmax,             :integer, :default => 60
+  config_param :dmax,             :integer, :default => 0
+  config_param :spoof,            :string,  :default => ''
 
   def configure(conf)
     super
@@ -56,15 +56,15 @@ class Fluent::GangliaOutput < Fluent::Output
     begin
       $log.debug("ganglia: #{name}: #{value}, ts: #{time}")
       Ganglia::GMetric.send(@host, @port, {
-        :name  => name,
-        :units => @units,
-        :type  => @value_type,
-        :value => value.to_s,
-        :tmax  => @tmax,
-        :dmax  => @dmax,
-        :title => @title,
-        :group => @group,
-        :spoof => @spoof ? 1 : 0,
+        :name     => name,
+        :value    => value.to_s,
+        :type     => @value_type,
+        :units    => @units,
+        :tmax     => @tmax,
+        :dmax     => @dmax,
+        :title    => @title,
+        :group    => @group,
+        :spoof    => @spoof ? 1 : 0,
         :hostname => @spoof,
       })
       status = true
