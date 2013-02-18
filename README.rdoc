@@ -14,23 +14,21 @@ For messages such as:
     tag:metrics {"metrics.field1":300, "metrics.field2":20}
     
     <match metrics>
-      type ganglia
-      gmond_port    8650
-      value_type    uint32
-      name_keys     metrics.field1,metrics.field2
-      spoof         192.0.2.100:web01
+      type       ganglia
+      port       8650
+      value_type uint32
+      name_keys  metrics.field1,metrics.field2
     </match>
 
 or, use "add_keys_prefix"
     tag:metrics {"field1":300, "field2":20}
 
     <match metrics>
-      type ganglia
-      gmond_port        8650
+      type              ganglia
+      port              8650
       value_type        uint32
       add_key_prefix    metrics
       name_key_pattern  ^field
-      spoof             192.0.2.100:web01
     </match>
 
 == TODO
@@ -39,5 +37,5 @@ or, use "add_keys_prefix"
 
 == Copyright
 
-Copyright:: Copyright (c) 2012- Hiroshi Sakai
+Copyright:: Copyright (c) 2013 Hiroshi Sakai
 License::   Apache License, Version 2.0
