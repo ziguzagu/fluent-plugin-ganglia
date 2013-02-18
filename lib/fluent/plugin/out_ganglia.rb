@@ -5,9 +5,11 @@ class Fluent::GangliaOutput < Fluent::Output
     super
     require "eventmachine" ## XXX: for fix error in gmetric
     require "gmetric"
+    require "socket"
   end
 
-  config_param :gmond_port, :integer
+  config_param :host, :string, :default => Socket.gethostname
+  config_param :port, :integer
   config_param :name_keys, :string, :default => nil
   config_param :name_key_pattern, :string, :default => nil
   config_param :add_key_prefix, :string, :default => nil
@@ -22,8 +24,8 @@ class Fluent::GangliaOutput < Fluent::Output
   def configure(conf)
     super
 
-    if @gmond_port.nil?
-      raise Fluent::ConfigError, "missing gmond_port"
+    if @port.nil?
+      raise Fluent::ConfigError, "missing port"
     end
 
     if @name_keys.nil? and @name_key_pattern.nil?
@@ -54,7 +56,7 @@ class Fluent::GangliaOutput < Fluent::Output
     end
     begin
       $log.debug("ganglia: #{name}: #{value}, ts: #{time}")
-      Ganglia::GMetric.send("127.0.0.1", @gmond_port, {
+      Ganglia::GMetric.send(@host, @port, {
         :name  => name,
         :units => @units,
         :type  => @value_type,
@@ -71,7 +73,7 @@ class Fluent::GangliaOutput < Fluent::Output
       $log.warn "Ganglia::GMetric.send raises exception: #{$!.class}, '#{$!.message}'"
     end
     unless status
-      $log.warn "failed to send to ganglia via gmond: port:#{@port}, '#{name}': #{value}"
+      $log.warn "failed to send to ganglia via gmond: #{@host}:#{@port}, '#{name}': #{value}"
     end
   end
 
