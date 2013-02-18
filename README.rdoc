@@ -2,7 +2,7 @@
 
 == Component
 
-=== ZabbixOutput
+=== GangliaOutput
 
 Plugin to output values to Ganglia.
 
