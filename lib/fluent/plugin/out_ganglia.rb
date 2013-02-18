@@ -3,7 +3,8 @@ class Fluent::GangliaOutput < Fluent::Output
 
   def initialize
     super
-    require 'gmetric'
+    require "eventmachine" ## XXX: for fix error in gmetric
+    require "gmetric"
   end
 
   config_param :gmond_port, :integer
