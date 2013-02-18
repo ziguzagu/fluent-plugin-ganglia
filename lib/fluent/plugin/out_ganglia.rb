@@ -5,10 +5,9 @@ class Fluent::GangliaOutput < Fluent::Output
     super
     require "eventmachine" ## XXX: for fix error in gmetric
     require "gmetric"
-    require "socket"
   end
 
-  config_param :host, :string, :default => Socket.gethostname
+  config_param :host, :string, :default => '127.0.0.1'
   config_param :port, :integer
   config_param :name_keys, :string, :default => nil
   config_param :name_key_pattern, :string, :default => nil
