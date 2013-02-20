@@ -7,7 +7,7 @@ class Fluent::GangliaOutput < Fluent::Output
     require "gmetric"
   end
 
-  config_param :port,             :integer
+  config_param :port,             :integer, :default => 8649
   config_param :host,             :string,  :default => '127.0.0.1'
   config_param :name_keys,        :string,  :default => nil
   config_param :name_key_pattern, :string,  :default => nil
@@ -22,10 +22,6 @@ class Fluent::GangliaOutput < Fluent::Output
 
   def configure(conf)
     super
-
-    if @port.nil?
-      raise Fluent::ConfigError, "missing port"
-    end
 
     if @name_keys.nil? and @name_key_pattern.nil?
       raise Fluent::ConfigError, "missing both of name_keys and name_key_pattern"
