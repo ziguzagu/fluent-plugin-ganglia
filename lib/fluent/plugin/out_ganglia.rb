@@ -3,8 +3,8 @@ class Fluent::GangliaOutput < Fluent::Output
 
   def initialize
     super
-    require "eventmachine" ## XXX: for fix error in gmetric
     require "gmetric"
+    require "socket"
   end
 
   config_param :port,             :integer, :default => 8649
@@ -19,10 +19,16 @@ class Fluent::GangliaOutput < Fluent::Output
   config_param :tmax,             :integer, :default => 60
   config_param :dmax,             :integer, :default => 0
   config_param :spoof,            :string,  :default => ''
+  config_param :hostname,         :string,  :default => Socket.gethostname
+  config_param :bind_ip,          :string,  :default => ''
 
   def configure(conf)
     super
 
+    ## XXX: using gangli with multicast should be bind to send udp packet?
+    if @host =~ /^239\./ && @bind_ip == ''
+      @bind_ip = IPSocket.getaddress(@hostname)
+    end
     if @name_keys.nil? and @name_key_pattern.nil?
       raise Fluent::ConfigError, "missing both of name_keys and name_key_pattern"
     end
@@ -51,7 +57,7 @@ class Fluent::GangliaOutput < Fluent::Output
     end
     begin
       $log.debug("ganglia: #{name}: #{value}, ts: #{time}")
-      Ganglia::GMetric.send(@host, @port, {
+      gmetric = Ganglia::GMetric.pack(
         :name     => name,
         :value    => value.to_s,
         :type     => @value_type,
@@ -61,8 +67,13 @@ class Fluent::GangliaOutput < Fluent::Output
         :title    => @title,
         :group    => @group,
         :spoof    => @spoof ? 1 : 0,
-        :hostname => @spoof,
-      })
+        :hostname => @spoof ? @spoof : @hostname,
+      )
+      conn = UDPSocket.new
+      conn.bind(@bind_ip, 0) if @bind_ip
+      conn.send gmetric[0], 0, @host, @port
+      conn.send gmetric[1], 0, @host, @port
+      conn.close
       status = true
     rescue IOError, EOFError, SystemCallError
       $log.warn "Ganglia::GMetric.send raises exception: #{$!.class}, '#{$!.message}'"
