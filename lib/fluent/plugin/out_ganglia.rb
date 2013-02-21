@@ -68,7 +68,7 @@ class Fluent::GangliaOutput < Fluent::Output
       $log.warn "Ganglia::GMetric.send raises exception: #{$!.class}, '#{$!.message}'"
     end
     unless status
-      $log.warn "failed to send to ganglia via gmond: #{@host}:#{@port}, '#{name}': #{value}"
+      $log.warn "failed to send to ganglia: #{@host}:#{@port}, '#{name}': #{value}"
     end
   end
 
