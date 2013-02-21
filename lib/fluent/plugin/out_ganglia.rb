@@ -26,7 +26,7 @@ class Fluent::GangliaOutput < Fluent::Output
   def configure(conf)
     super
 
-    ## XXX: using gangli with multicast should be bind to send udp packet?
+    ## XXX: using ganglia with multicast should be bind to send udp packet?
     if @host =~ /^239\./ && @bind_ip == ''
       @bind_ip = IPSocket.getaddress(@hostname)
     end
