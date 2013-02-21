@@ -18,6 +18,7 @@ class Fluent::GangliaOutput < Fluent::Output
   config_param :title,            :string,  :default => ''
   config_param :tmax,             :integer, :default => 60
   config_param :dmax,             :integer, :default => 0
+  config_param :slope,            :string,  :default => 'both'
   config_param :spoof,            :string,  :default => ''
   config_param :hostname,         :string,  :default => Socket.gethostname
   config_param :bind_ip,          :string,  :default => ''
@@ -66,6 +67,7 @@ class Fluent::GangliaOutput < Fluent::Output
         :dmax     => @dmax,
         :title    => @title,
         :group    => @group,
+        :slope    => @slope,                                      
         :spoof    => @spoof ? 1 : 0,
         :hostname => @spoof ? @spoof : @hostname,
       )
