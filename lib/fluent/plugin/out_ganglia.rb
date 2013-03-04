@@ -1,6 +1,9 @@
 class Fluent::GangliaOutput < Fluent::Output
   Fluent::Plugin.register_output('ganglia', self)
 
+  HOSTNAME = Socket.gethostname
+  HOSTADDR = IPSocket.getaddress(HOSTNAME)
+
   def initialize
     super
     require "gmetric"
@@ -20,16 +23,11 @@ class Fluent::GangliaOutput < Fluent::Output
   config_param :dmax,             :integer, :default => 0
   config_param :slope,            :string,  :default => 'both'
   config_param :spoof,            :string,  :default => ''
-  config_param :hostname,         :string,  :default => Socket.gethostname
-  config_param :bind_ip,          :string,  :default => ''
+  config_param :bind,             :bool,    :default => false
 
   def configure(conf)
     super
 
-    ## XXX: using ganglia with multicast should be bind to send udp packet?
-    if @host =~ /^239\./ && @bind_ip == ''
-      @bind_ip = IPSocket.getaddress(@hostname)
-    end
     if @name_keys.nil? and @name_key_pattern.nil?
       raise Fluent::ConfigError, "missing both of name_keys and name_key_pattern"
     end
@@ -69,10 +67,10 @@ class Fluent::GangliaOutput < Fluent::Output
         :group    => @group,
         :slope    => @slope,                                      
         :spoof    => @spoof ? 1 : 0,
-        :hostname => @spoof ? @spoof : @hostname,
+        :hostname => @spoof ? @spoof : HOSTNAME,
       )
       conn = UDPSocket.new
-      conn.bind(@bind_ip, 0) if @bind_ip
+      conn.bind(HOSTADDR, 0) if @bind
       conn.send gmetric[0], 0, @host, @port
       conn.send gmetric[1], 0, @host, @port
       conn.close
