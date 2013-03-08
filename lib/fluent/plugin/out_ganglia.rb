@@ -23,7 +23,7 @@ class Fluent::GangliaOutput < Fluent::Output
   config_param :dmax,             :integer, :default => 0
   config_param :slope,            :string,  :default => 'both'
   config_param :spoof,            :string,  :default => nil
-  config_param :bind,             :bool,    :default => false
+  config_param :bind_hostname,    :bool,    :default => false
 
   def configure(conf)
     super
@@ -70,7 +70,7 @@ class Fluent::GangliaOutput < Fluent::Output
         :hostname => @spoof ? @spoof : HOSTNAME,
       )
       conn = UDPSocket.new
-      conn.bind(HOSTADDR, 0) if @bind
+      conn.bind(HOSTADDR, 0) if @bind_hostname
       conn.send gmetric[0], 0, @host, @port
       conn.send gmetric[1], 0, @host, @port
       conn.close
