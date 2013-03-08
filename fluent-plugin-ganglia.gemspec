@@ -19,5 +19,4 @@ Gem::Specification.new do |gem|
 
   gem.add_runtime_dependency "fluentd"
   gem.add_runtime_dependency "gmetric"
-  gem.add_runtime_dependency "eventmachine"
 end
