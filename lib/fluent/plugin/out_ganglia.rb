@@ -22,7 +22,7 @@ class Fluent::GangliaOutput < Fluent::Output
   config_param :tmax,             :integer, :default => 60
   config_param :dmax,             :integer, :default => 0
   config_param :slope,            :string,  :default => 'both'
-  config_param :spoof,            :string,  :default => ''
+  config_param :spoof,            :string,  :default => nil
   config_param :bind,             :bool,    :default => false
 
   def configure(conf)
