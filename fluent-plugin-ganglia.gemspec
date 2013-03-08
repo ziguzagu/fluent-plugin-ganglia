@@ -5,8 +5,8 @@ Gem::Specification.new do |gem|
   gem.version       = "0.0.1"
   gem.authors       = ["Hiroshi Sakai"]
   gem.email         = ["ziguzagu@gmail.com"]
-  gem.description   = %q{Fluentd output plugin to ganglia via gmond}
-  gem.summary       = %q{Fluentd output plugin to ganglia via gmond}
+  gem.description   = %q{Fluentd output plugin to ganglia}
+  gem.summary       = %q{Fluentd output plugin to ganglia}
   gem.homepage      = "https://github.com/ziguzagu/fluent-plugin-ganglia"
 
   gem.files         = `git ls-files`.split($\)
