@@ -65,7 +65,7 @@ class Fluent::GangliaOutput < Fluent::Output
         :dmax     => @dmax,
         :title    => @title,
         :group    => @group,
-        :slope    => @slope,                                      
+        :slope    => @slope,
         :spoof    => @spoof ? 1 : 0,
         :hostname => @spoof ? @spoof : HOSTNAME,
       )
