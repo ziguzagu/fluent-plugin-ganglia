@@ -1,41 +1,76 @@
-= fluent-plugin-ganglia
+# fluent-plugin-ganglia
 
-== Component
-
-=== GangliaOutput
+# GangliaOutput
 
 Plugin to output values to Ganglia.
 
-== Configuration
+# Configuration
 
-=== GangliaOutput
+* type
+    * required "ganglia"
+* name_keys or name_key_pattern
+    * required
+    * specify key name by name_keys or regexp pattern of keys by name_key_pattern
+* add_key_prefix
+    * string to add key prefix
+* host
+    * host to send metric (default=127.0.0.1)
+* post
+    * port of host to send metric (default=8649)
+* value_type
+    * type of value
+    * same as gmetric --type
+* units
+    * unit of value
+    * same as gemtric --units
+* group
+    * metric group
+    * same as gemtric --group
+* title
+    * metric title
+    * same as gemtric --title
+* tmax
+    * maximum time in seconds between gmetric calls. (default=60)
+    * same as gemtric --tmax
+* dmax
+    * lifetime in seconds of this metric. (default=0)
+    * same as gemtric --dmax
+* slope
+    * Either zero|positive|negative|both. (default=both)
+    * same as gemtric --slope
+* spoof
+    * IP address and name of host/device we are spoofing. (default=nil)
+    * same as gmetric --spooof
+* bind_hostname
+    * whether upd_send_channel.bind_hostname is yes(true) or no(fale). (default=false)
 
-For messages such as:
-    tag:metrics {"metrics.field1":300, "metrics.field2":20}
-    
+# Example
+
+## gmond configured udp_send_channel with multicast and 'bind_hostname = yes':
+
     <match metrics>
-      type       ganglia
-      port       8650
-      value_type uint32
-      name_keys  metrics.field1,metrics.field2
+      type          ganglia
+      host          239.2.11.71
+      port          8649
+      group         metric_group
+      name_keys     metrics.field1,metrics.field2
+      bind_hostname true
     </match>
 
-or, use "add_keys_prefix"
-    tag:metrics {"field1":300, "field2":20}
+## gmond configured with unicast
 
     <match metrics>
       type              ganglia
-      port              8650
-      value_type        uint32
-      add_key_prefix    metrics
+      host              192.0.2.100
+      port              8649
+      group             metric_group
       name_key_pattern  ^field
     </match>
 
-== TODO
+# License
 
-- patches welcome!
+Apache License, Version 2.0
 
-== Copyright
+# Copyright
 
-Copyright:: Copyright (c) 2013 Hiroshi Sakai
-License::   Apache License, Version 2.0
+Copyright (c) 2013 Hiroshi Sakai
