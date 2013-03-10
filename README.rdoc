@@ -1,22 +1,22 @@
-# fluent-plugin-ganglia
+= fluent-plugin-ganglia
 
-# GangliaOutput
+= GangliaOutput
 
 Plugin to output values to Ganglia.
 
-# Configuration
+= Configuration
 
 * type
-    * required "ganglia"
+** required "ganglia"
 * name_keys or name_key_pattern
-    * required
-    * specify key name by name_keys or regexp pattern of keys by name_key_pattern
+** required
+** specify key name by _name_keys_ or regexp pattern of keys by _name_key_pattern_
 * add_key_prefix
-    * string to add key prefix
+** string to add key prefix
 * host
-    * host to send metric (default=127.0.0.1)
+** host to send metric (default=127.0.0.1)
 * post
-    * port of host to send metric (default=8649)
+** port of host to send metric (default=8649)
 * value_type
     * type of value
     * same as gmetric --type
@@ -44,9 +44,9 @@ Plugin to output values to Ganglia.
 * bind_hostname
     * whether upd_send_channel.bind_hostname is yes(true) or no(fale). (default=false)
 
-# Example
+= Example
 
-## gmond configured udp_send_channel with multicast and 'bind_hostname = yes':
+== gmond configured udp_send_channel with multicast and 'bind_hostname = yes':
 
     <match metrics>
       type          ganglia
@@ -57,7 +57,7 @@ Plugin to output values to Ganglia.
       bind_hostname true
     </match>
 
-## gmond configured with unicast
+== gmond configured with unicast
 
     <match metrics>
       type              ganglia
@@ -67,10 +67,10 @@ Plugin to output values to Ganglia.
       name_key_pattern  ^field
     </match>
 
-# License
+= License
 
 Apache License, Version 2.0
 
-# Copyright
+= Copyright
 
 Copyright (c) 2013 Hiroshi Sakai
