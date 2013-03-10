@@ -1,52 +1,61 @@
 = fluent-plugin-ganglia
 
-= GangliaOutput
-
 Plugin to output values to Ganglia.
 
 = Configuration
 
 * type
-** required "ganglia"
+  * required "ganglia"
 * name_keys or name_key_pattern
-** required
-** specify key name by _name_keys_ or regexp pattern of keys by _name_key_pattern_
+  * required
+  * specify key name by _name_keys_ or regexp pattern of keys by _name_key_pattern_
 * add_key_prefix
-** string to add key prefix
+  * string to add key prefix
 * host
-** host to send metric (default=127.0.0.1)
+  * host to send metric (default=127.0.0.1)
 * post
-** port of host to send metric (default=8649)
+  * port of host to send metric (default=8649)
 * value_type
-** type of value
-** same as gmetric --type
+  * type of value
+  * same as gmetric --type
 * units
-** unit of value
-** same as gemtric --units
+  * unit of value
+  * same as gemtric --units
 * group
-** metric group
-** same as gemtric --group
+  * metric group
+  * same as gemtric --group
 * title
-** metric title
-** same as gemtric --title
+  * metric title
+  * same as gemtric --title
 * tmax
-** maximum time in seconds between gmetric calls. (default=60)
-** same as gemtric --tmax
+  * maximum time in seconds between gmetric calls. (default=60)
+  * same as gemtric --tmax
 * dmax
-** lifetime in seconds of this metric. (default=0)
-** same as gemtric --dmax
+  * lifetime in seconds of this metric. (default=0)
+  * same as gemtric --dmax
 * slope
-** Either zero|positive|negative|both. (default=both)
-** same as gemtric --slope
+  * Either zero|positive|negative|both. (default=both)
+  * same as gemtric --slope
 * spoof
-** IP address and name of host/device we are spoofing. (default=nil)
-** same as gmetric --spooof
+  * IP address and name of host/device we are spoofing. (default=nil)
+  * same as gmetric --spooof
 * bind_hostname
-** whether upd_send_channel.bind_hostname is yes(true) or no(fale). (default=false)
+  * whether upd_send_channel.bind_hostname is yes(true) or no(fale). (default=false)
 
 = Example
 
-== gmond configured udp_send_channel with multicast and 'bind_hostname = yes':
+== gmond configured with multicast
+
+when the gmond configured with multicast and bind_hostname as below:
+
+    udp_send_channel {
+        mcast_join    = 239.2.11.71
+        bind_hostname = yes
+        port          = 8640
+        ...
+    }
+
+you should specify mcast_join ip address to _host_ and set _bind__hostname_ true:
 
     <match metrics>
       type          ganglia
@@ -58,6 +67,8 @@ Plugin to output values to Ganglia.
     </match>
 
 == gmond configured with unicast
+
+when the gmond configured with unicast, you should specify _host_ and _port_ with same value of gmond.conf:
 
     <match metrics>
       type              ganglia
