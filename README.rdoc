@@ -18,31 +18,31 @@ Plugin to output values to Ganglia.
 * post
 ** port of host to send metric (default=8649)
 * value_type
-    * type of value
-    * same as gmetric --type
+** type of value
+** same as gmetric --type
 * units
-    * unit of value
-    * same as gemtric --units
+** unit of value
+** same as gemtric --units
 * group
-    * metric group
-    * same as gemtric --group
+** metric group
+** same as gemtric --group
 * title
-    * metric title
-    * same as gemtric --title
+** metric title
+** same as gemtric --title
 * tmax
-    * maximum time in seconds between gmetric calls. (default=60)
-    * same as gemtric --tmax
+** maximum time in seconds between gmetric calls. (default=60)
+** same as gemtric --tmax
 * dmax
-    * lifetime in seconds of this metric. (default=0)
-    * same as gemtric --dmax
+** lifetime in seconds of this metric. (default=0)
+** same as gemtric --dmax
 * slope
-    * Either zero|positive|negative|both. (default=both)
-    * same as gemtric --slope
+** Either zero|positive|negative|both. (default=both)
+** same as gemtric --slope
 * spoof
-    * IP address and name of host/device we are spoofing. (default=nil)
-    * same as gmetric --spooof
+** IP address and name of host/device we are spoofing. (default=nil)
+** same as gmetric --spooof
 * bind_hostname
-    * whether upd_send_channel.bind_hostname is yes(true) or no(fale). (default=false)
+** whether upd_send_channel.bind_hostname is yes(true) or no(fale). (default=false)
 
 = Example
 
