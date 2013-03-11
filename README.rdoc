@@ -44,9 +44,9 @@ Plugin to output values to Ganglia.
 
 = Example
 
-== gmond configured with multicast
+== gmond is configured with multicast
 
-when the gmond configured with multicast and bind_hostname as below:
+when gmond is configured with multicast and bind_hostname as below:
 
     udp_send_channel {
         mcast_join    = 239.2.11.71
@@ -66,9 +66,9 @@ you should specify mcast_join ip address to _host_ and set _bind__hostname_ true
       bind_hostname true
     </match>
 
-== gmond configured with unicast
+== gmond is configured with unicast
 
-when the gmond configured with unicast, you should specify _host_ and _port_ with same value of gmond.conf:
+when gmond is configured with unicast, you should specify _host_ and _port_ with same value of gmond.conf:
 
     <match metrics>
       type              ganglia
