@@ -4,6 +4,11 @@ class Fluent::GangliaOutput < Fluent::Output
   HOSTNAME = Socket.gethostname
   HOSTADDR = IPSocket.getaddress(HOSTNAME)
 
+  ## Define 'log' method to support log method for v0.10.42 or earlier
+  unless method_defined?(:log)
+    define_method("log") { $log }
+  end
+
   def initialize
     super
     require "gmetric"
@@ -55,7 +60,7 @@ class Fluent::GangliaOutput < Fluent::Output
       name = "#{@add_key_prefix} #{name}"
     end
     begin
-      $log.debug("ganglia: #{name}: #{value}, ts: #{time}")
+      log.debug("ganglia: #{name}: #{value}, ts: #{time}")
       gmetric = Ganglia::GMetric.pack(
         :name     => name,
         :value    => value.to_s,
@@ -76,10 +81,10 @@ class Fluent::GangliaOutput < Fluent::Output
       conn.close
       status = true
     rescue IOError, EOFError, SystemCallError
-      $log.warn "Ganglia::GMetric.send raises exception: #{$!.class}, '#{$!.message}'"
+      log.warn "Ganglia::GMetric.send raises exception: #{$!.class}, '#{$!.message}'"
     end
     unless status
-      $log.warn "failed to send to ganglia: #{@host}:#{@port}, '#{name}': #{value}"
+      log.warn "failed to send to ganglia: #{@host}:#{@port}, '#{name}': #{value}"
     end
   end
 
