@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |gem|
   gem.name          = "fluent-plugin-ganglia"
-  gem.version       = "0.0.1"
+  gem.version       = "0.0.2"
   gem.authors       = ["Hiroshi Sakai"]
   gem.email         = ["ziguzagu@gmail.com"]
   gem.description   = %q{Fluentd output plugin to ganglia}
