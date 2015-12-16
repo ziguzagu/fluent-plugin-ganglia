@@ -1,14 +1,14 @@
-= fluent-plugin-ganglia
+# fluent-plugin-ganglia
 
 Plugin to output values to Ganglia.
 
-= Configuration
+## Configuration
 
 * type
   * required "ganglia"
 * name_keys or name_key_pattern
   * required
-  * specify key name by _name_keys_ or regexp pattern of keys by _name_key_pattern_
+  * specify key name by `name_keys` or regexp pattern of keys by `name_key_pattern`
 * add_key_prefix
   * string to add key prefix
 * host
@@ -42,46 +42,52 @@ Plugin to output values to Ganglia.
 * bind_hostname
   * whether upd_send_channel.bind_hostname is yes(true) or no(fale). (default=false)
 
-= Example
+## Example
 
-== gmond is configured with multicast
+### gmond is configured with multicast
 
 when gmond is configured with multicast and bind_hostname as below:
 
-    udp_send_channel {
-        mcast_join    = 239.2.11.71
-        bind_hostname = yes
-        port          = 8640
-        ...
-    }
+```
+udp_send_channel {
+    mcast_join    = 239.2.11.71
+    bind_hostname = yes
+    port          = 8640
+    ...
+}
+```
 
-you should specify mcast_join ip address to _host_ and set _bind__hostname_ true:
+you should specify mcast_join ip address to `host` and set `bind_hostname` true:
 
-    <match metrics>
-      type          ganglia
-      host          239.2.11.71
-      port          8649
-      group         metric_group
-      name_keys     metrics.field1,metrics.field2
-      bind_hostname true
-    </match>
+```
+<match metrics>
+  type          ganglia
+  host          239.2.11.71
+  port          8649
+  group         metric_group
+  name_keys     metrics.field1,metrics.field2
+  bind_hostname true
+</match>
+```
 
-== gmond is configured with unicast
+### gmond is configured with unicast
 
-when gmond is configured with unicast, you should specify _host_ and _port_ with same value of gmond.conf:
+when gmond is configured with unicast, you should specify `host` and `port` with same value of gmond.conf:
 
-    <match metrics>
-      type              ganglia
-      host              192.0.2.100
-      port              8649
-      group             metric_group
-      name_key_pattern  ^field
-    </match>
+```
+<match metrics>
+  type              ganglia
+  host              192.0.2.100
+  port              8649
+  group             metric_group
+  name_key_pattern  ^field
+</match>
+```
 
-= License
+## License
 
 Apache License, Version 2.0
 
-= Copyright
+## Copyright
 
 Copyright (c) 2013 Hiroshi Sakai
