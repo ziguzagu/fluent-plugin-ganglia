@@ -2,6 +2,48 @@
 
 Plugin to output values to Ganglia.
 
+## Usage
+
+### gmond is configured with multicast
+
+When gmond is configured with multicast and bind_hostname as below:
+
+```
+udp_send_channel {
+    mcast_join    = 239.2.11.71
+    bind_hostname = yes
+    port          = 8640
+    ...
+}
+```
+
+You should specify mcast_join ip address to `host` and set `bind_hostname` true:
+
+```
+<match metrics>
+  type          ganglia
+  host          239.2.11.71
+  port          8649
+  group         metric_group
+  name_keys     metrics.field1,metrics.field2
+  bind_hostname true
+</match>
+```
+
+### gmond is configured with unicast
+
+When gmond is configured with unicast, you should specify `host` and `port` with same value of gmond.conf:
+
+```
+<match metrics>
+  type              ganglia
+  host              192.0.2.100
+  port              8649
+  group             metric_group
+  name_key_pattern  ^field
+</match>
+```
+
 ## Configuration
 
 * type
@@ -41,48 +83,6 @@ Plugin to output values to Ganglia.
   * same as gmetric --spooof
 * bind_hostname
   * whether upd_send_channel.bind_hostname is yes(true) or no(fale). (default=false)
-
-## Example
-
-### gmond is configured with multicast
-
-when gmond is configured with multicast and bind_hostname as below:
-
-```
-udp_send_channel {
-    mcast_join    = 239.2.11.71
-    bind_hostname = yes
-    port          = 8640
-    ...
-}
-```
-
-you should specify mcast_join ip address to `host` and set `bind_hostname` true:
-
-```
-<match metrics>
-  type          ganglia
-  host          239.2.11.71
-  port          8649
-  group         metric_group
-  name_keys     metrics.field1,metrics.field2
-  bind_hostname true
-</match>
-```
-
-### gmond is configured with unicast
-
-when gmond is configured with unicast, you should specify `host` and `port` with same value of gmond.conf:
-
-```
-<match metrics>
-  type              ganglia
-  host              192.0.2.100
-  port              8649
-  group             metric_group
-  name_key_pattern  ^field
-</match>
-```
 
 ## License
 
